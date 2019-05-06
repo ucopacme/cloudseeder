@@ -27,9 +27,10 @@ def gci():
     return gci
 
 
-def create_tags(app, env, team, repo):
+def create_tags(app, builder, env, team, repo):
     tags = Tags(
         app=app,
+        builder=builder,
         env=env,
         team=team,
         repo=repo,
