@@ -20,7 +20,10 @@ from troposphere import (
 
 from troposphere.s3 import (
     Bucket,
+    BucketEncryption,
     PublicAccessBlockConfiguration,
+    ServerSideEncryptionByDefault,
+    ServerSideEncryptionRule,
     VersioningConfiguration
 )
 
@@ -29,6 +32,15 @@ def add_bucket(tags, template, versioning):
     template.add_resource(
         Bucket(
             "GetMeABucket",
+            BucketEncryption=BucketEncryption(
+                ServerSideEncryptionConfiguration=[
+                    ServerSideEncryptionRule(
+                        ServerSideEncryptionByDefault=ServerSideEncryptionByDefault(
+                            SSEAlgorithm="aws:kms",
+                        )
+                    )
+                ]
+            ),
             DeletionPolicy="Retain",
             PublicAccessBlockConfiguration=PublicAccessBlockConfiguration(
                 BlockPublicAcls=True,
